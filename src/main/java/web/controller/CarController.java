@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import web.model.Car;
 import web.service.CarService;
 
@@ -20,18 +21,18 @@ public class CarController {
     }
 
     public List<Car> getCars(int count) {
-        if (count > 5) {
+        if (count < 5) {
             return carService.carList().stream().limit(count).toList();
-        } else if (count >= 5) {
-            return carService.carList();
+        } else {
+            return carService.carList().stream().limit(5).toList();
         }
-        return null;
     }
 
     @GetMapping(value = "/cars")
-    public String printCar(ModelMap model) {
-        getCars(3);
-        model.addAttribute("cars", getCars(3));
+    public String printCar(@RequestParam(name = "count", required = false, defaultValue = "5")
+                               int count, ModelMap model) {
+        model.addAttribute("count", count);
+        getCars(count).stream().forEach(model::addAttribute);
         return "cars";
     }
 }
