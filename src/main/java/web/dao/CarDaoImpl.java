@@ -11,7 +11,7 @@ public class CarDaoImpl implements CarDao {
     @Override
     public List<Car> carList() {
         List<Car> cars = new ArrayList<Car>();
-        for (int i = 0; i < 5; i++) {
+        for (int i = 1; i < 6; i++) {
             Car car = new Car("model" + i, i, "color" + i);
             cars.add(car);
         }

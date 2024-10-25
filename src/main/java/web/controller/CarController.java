@@ -32,7 +32,7 @@ public class CarController {
     public String printCar(@RequestParam(name = "count", required = false, defaultValue = "5")
                                int count, ModelMap model) {
         model.addAttribute("count", count);
-        getCars(count).stream().forEach(model::addAttribute);
+        model.addAttribute("cars", getCars(count));
         return "cars";
     }
 }
